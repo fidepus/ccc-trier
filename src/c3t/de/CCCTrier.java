@@ -28,7 +28,7 @@ public class CCCTrier extends TabActivity {
         tabHost.addTab(spec);
 
         // Do the same for the other tabs
-        intent = new Intent().setClass(this, InfoActivity.class);
+        intent = new Intent().setClass(this, StatusActivity.class);
         spec = tabHost.newTabSpec("status").setIndicator("Status",
                           res.getDrawable(R.drawable.ic_tab_status))
                       .setContent(intent);
@@ -40,6 +40,6 @@ public class CCCTrier extends TabActivity {
                       .setContent(intent);
         tabHost.addTab(spec);
 
-        tabHost.setCurrentTab(1);
+        tabHost.setCurrentTab(0);
     }
 }

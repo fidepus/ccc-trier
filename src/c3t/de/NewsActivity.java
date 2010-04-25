@@ -9,6 +9,7 @@ public class NewsActivity extends Activity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
 
         TextView textview = new TextView(this);
         textview.setText("Hier sind später die News");

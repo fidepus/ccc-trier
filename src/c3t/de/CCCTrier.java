@@ -2,44 +2,23 @@ package c3t.de;
 
 import android.app.TabActivity;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.widget.TabHost;
 
-public class CCCTrier extends TabActivity {
-    /** Called when the activity is first created. */
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+public class CCCTrier extends TabActivity
 
-        Resources res = getResources(); // Resource object to get Drawables
-        TabHost tabHost = getTabHost();  // The activity TabHost
-        TabHost.TabSpec spec;  // Resusable TabSpec for each tab
-        Intent intent;  // Reusable Intent for each tab
+{
+/** Called when the activity is first created. */
+@Override public void onCreate(Bundle savedInstanceState)
+{
+super.onCreate(savedInstanceState);
 
-        // Create an Intent to launch an Activity for the tab (to be reused)
-        intent = new Intent().setClass(this, NewsActivity.class);
+TabHost tabHost = getTabHost();
+tabHost.addTab(tabHost.newTabSpec("1").setIndicator("News", getResources().getDrawable(R.drawable.ic_tab_news)).setContent(new Intent(this, NewsActivity.class)));
+tabHost.addTab(tabHost.newTabSpec("2").setIndicator("Status", getResources().getDrawable(R.drawable.ic_tab_status)).setContent(new Intent(this, StatusActivity.class)));
+tabHost.addTab(tabHost.newTabSpec("3").setIndicator("Info", getResources().getDrawable(R.drawable.ic_tab_info)).setContent(new Intent(this, InfoActivity.class)));
 
-        // Initialize a TabSpec for each tab and add it to the TabHost
-        spec = tabHost.newTabSpec("news").setIndicator("News",
-                          res.getDrawable(R.drawable.ic_tab_news))
-                      .setContent(intent);
-        tabHost.addTab(spec);
 
-        // Do the same for the other tabs
-        intent = new Intent().setClass(this, StatusActivity.class);
-        spec = tabHost.newTabSpec("status").setIndicator("Status",
-                          res.getDrawable(R.drawable.ic_tab_status))
-                      .setContent(intent);
-        tabHost.addTab(spec);
-
-        intent = new Intent().setClass(this, InfoActivity.class);
-        spec = tabHost.newTabSpec("info").setIndicator("Info",
-                          res.getDrawable(R.drawable.ic_tab_info))
-                      .setContent(intent);
-        tabHost.addTab(spec);
-
-        tabHost.setCurrentTab(0);
-    }
 }
+}
+ 

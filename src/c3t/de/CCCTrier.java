@@ -21,4 +21,3 @@ tabHost.addTab(tabHost.newTabSpec("3").setIndicator("Info", getResources().getDr
 
 }
 }
- 

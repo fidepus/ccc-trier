@@ -9,9 +9,11 @@ public class StatusActivity extends Activity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.status);
 
         TextView textview = new TextView(this);
         textview.setText("Hier ist später der Clubstatus.");
-        setContentView(textview);
+        // setContentView(textview);
+
     }
 }

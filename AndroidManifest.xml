@@ -13,7 +13,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-         <activity android:name="InfoActivity"></activity> 
+         <activity android:name="NaviActivity"></activity> 
         <activity android:name="NewsActivity"></activity> 
         <activity android:name="StatusActivity"></activity>
     </application>

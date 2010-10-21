@@ -5,7 +5,7 @@ import android.os.Bundle;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
 
-public class InfoActivity extends MapActivity {
+public class NaviActivity extends MapActivity {
 	@Override
 	protected boolean isRouteDisplayed() {
 	    return false;
@@ -13,7 +13,7 @@ public class InfoActivity extends MapActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
-	    setContentView(R.layout.info);
+	    setContentView(R.layout.navi);
 	    MapView mapView = (MapView) findViewById(R.id.mapview);
 	    mapView.setBuiltInZoomControls(true);
 	}

@@ -33,6 +33,22 @@ public class StatusActivity extends Activity {
 		} catch (Exception e) {
 		}
 	}
+	
+	public void onResume() {
+		super.onResume();
+		try {
+			fetchStatus();
+		} catch (Exception e) {
+		}
+	}
+	
+	public void onRestart() {
+		super.onRestart();
+		try {
+			fetchStatus();
+		} catch (Exception e) {
+		}
+	}
 
 	void setStatusOn() {
 		findViewById(R.id.LinearLayout01).setBackgroundResource(

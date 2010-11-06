@@ -33,7 +33,7 @@ public class StatusActivity extends Activity {
 		} catch (Exception e) {
 		}
 	}
-	
+
 	public void onResume() {
 		super.onResume();
 		try {
@@ -41,7 +41,7 @@ public class StatusActivity extends Activity {
 		} catch (Exception e) {
 		}
 	}
-	
+
 	public void onRestart() {
 		super.onRestart();
 		try {
@@ -51,14 +51,12 @@ public class StatusActivity extends Activity {
 	}
 
 	void setStatusOn() {
-		findViewById(R.id.LinearLayout01).setBackgroundResource(
-				R.drawable.led_an);
+		findViewById(R.id.LinearLayout01).setBackgroundResource(R.drawable.status_led_on);
 		isOn = true;
 	}
 
 	void setStatusOff() {
-		findViewById(R.id.LinearLayout01).setBackgroundResource(
-				R.drawable.led_aus);
+		findViewById(R.id.LinearLayout01).setBackgroundResource(R.drawable.status_led_off);
 		isOn = false;
 	}
 
@@ -66,16 +64,14 @@ public class StatusActivity extends Activity {
 		return isOn;
 	}
 
-	void fetchStatus() throws XmlPullParserException, ClientProtocolException,
-			URISyntaxException, IOException {
+	void fetchStatus() throws XmlPullParserException, ClientProtocolException, URISyntaxException, IOException {
 		XmlPullParserFactory factory = null;
 		factory = XmlPullParserFactory.newInstance();
 		factory.setNamespaceAware(true);
 		XmlPullParser xpp = null;
 		xpp = factory.newPullParser();
 
-		xpp.setInput(new InputStreamReader(
-				getUrlData("http://c3t.de/club/flag.xml")));
+		xpp.setInput(new InputStreamReader(getUrlData("http://c3t.de/club/flag.xml")));
 		int eventType = 0;
 		eventType = xpp.getEventType();
 		while (eventType != XmlPullParser.END_DOCUMENT) {
@@ -92,8 +88,7 @@ public class StatusActivity extends Activity {
 		}
 	}
 
-	public InputStream getUrlData(String url) throws URISyntaxException,
-			ClientProtocolException, IOException {
+	public InputStream getUrlData(String url) throws URISyntaxException, ClientProtocolException, IOException {
 
 		DefaultHttpClient client = new DefaultHttpClient();
 		HttpGet method = new HttpGet(new URI(url));

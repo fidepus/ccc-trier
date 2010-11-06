@@ -5,38 +5,18 @@
     android:layout_height="fill_parent">
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:padding="5dp">
     <TabWidget
         android:id="@android:id/tabs"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-	<LinearLayout 
-    android:orientation="horizontal"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-     >
-    <Button
-        android:id="@+id/club"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Club" />
-    <Button
-        android:id="@+id/planet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Planet" />
-    <Button
-        android:id="@+id/twitter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Twitter" />
-    </LinearLayout>
+
     <FrameLayout
         android:id="@android:id/tabcontent"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:padding="5dp" />
     </LinearLayout>
 </TabHost>

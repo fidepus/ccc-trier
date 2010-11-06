@@ -16,7 +16,7 @@ public class MessageList extends ListActivity {
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-        setContentView(R.layout.main);
+        setContentView(android.R.id.list);
         loadFeed();
     }
 

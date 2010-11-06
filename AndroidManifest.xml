@@ -16,6 +16,10 @@
          <activity android:name="NaviActivity"></activity> 
         <activity android:name="NewsActivity"></activity> 
         <activity android:name="StatusActivity"></activity>
+        <activity android:name="NaviItemizedOverlay"></activity>
+        <activity android:name="MessageList"></activity>
+        <activity android:name="DummyText"></activity>
+        <activity android:name="NewsActivityGroup"></activity>
     </application>
     <uses-sdk android:minSdkVersion="4" />
 </manifest>

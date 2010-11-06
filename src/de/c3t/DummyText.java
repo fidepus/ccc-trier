@@ -1,4 +1,4 @@
-package c3t.de;
+package de.c3t;
 
 import android.app.Activity;
 import android.os.Bundle;

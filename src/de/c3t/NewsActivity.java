@@ -7,13 +7,18 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.c3t.DummyText;
+
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.sax.Element;
 import android.sax.EndElementListener;
 import android.sax.EndTextElementListener;
 import android.sax.RootElement;
 import android.util.Xml;
+import android.view.View;
+import android.widget.Button;
 
 public class NewsActivity extends Activity {
 
@@ -35,6 +40,24 @@ public class NewsActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.newstab);
+		
+        final Button button = (Button) findViewById(R.id.club);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+            //	Toast.makeText(NewsActivity.this, "hello", Toast.LENGTH_LONG).show();
+            	Intent showClubListIntent=new Intent(NewsActivity.this,DummyText.class);
+            	startActivity(showClubListIntent);
+            	View view = NewsActivityGroup.group.getLocalActivityManager().startActivity("DummyText", showClubListIntent).getDecorView();
+            	
+            	NewsActivityGroup.group.setContentView(view);
+            }
+        }); 
+		
+        /*	TabHost tabHost = getTabHost();
+		tabHost.addTab(tabHost.newTabSpec("1").setIndicator("Club").setContent(new Intent(this, DummyText.class)));
+		tabHost.addTab(tabHost.newTabSpec("2").setIndicator("Planet").setContent(new Intent(this, StatusActivity.class)));
+		tabHost.addTab(tabHost.newTabSpec("3").setIndicator("Twitter").setContent(new Intent(this, NaviActivity.class)));
+		**/
 		try {
 			feedUrl = new URL(feedUrlString);
 		} catch (MalformedURLException e) {

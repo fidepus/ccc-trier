@@ -27,5 +27,5 @@ build
 
 # project-specific files
 
-bin/
-gen/
+bin/*
+gen/*

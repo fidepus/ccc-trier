@@ -1,31 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="wrap_content"
-  android:layout_height="fill_parent"
-  android:layout_gravity="center_horizontal">
-    <Button
-        android:id="@+id/club"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Club" 
-        android:clickable="true" 
-        android:cursorVisible="false" 
-        android:hapticFeedbackEnabled="true" 
-        android:focusableInTouchMode="false" 
-        android:focusable="true"
-        android:layout_gravity="center_vertical" />
+<RelativeLayout 
+	xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+>
+			<TextView 
+    				android:text="Feed me!" 
+    				android:layout_width="fill_parent" 
+    				android:layout_height="wrap_content" 
+    				android:gravity="center_horizontal|center">
+    				</TextView>
+    				
+    			<RelativeLayout
+    				android:layout_width="wrap_content"
+                	android:layout_height="wrap_content"
+                	android:layout_alignParentBottom="true"
+                >
+                <Button 
+                	android:id="@+id/club" 
+                	android:layout_width="wrap_content" 
+                	android:layout_height="wrap_content" 
+                	android:text="Club" 
+                	android:clickable="true" 
+                	android:cursorVisible="false" 
+                	android:hapticFeedbackEnabled="true" 
+                	android:focusableInTouchMode="false" 
+                	android:focusable="true" 
+                	android:layout_alignParentLeft="true" 
+                />
+                <Button 
+                	android:id="@+id/planet" 
+                	android:layout_width="wrap_content" 
+                	android:layout_height="wrap_content" 
+                	android:text="Planet" 
+                	android:layout_centerHorizontal="true"
+                />
+                <Button 
+                	android:id="@+id/twitter" 
+                	android:layout_width="wrap_content" 
+                	android:layout_height="wrap_content" 
+                	android:text="Twitter"
+                	android:layout_alignParentRight="true" 
+                />
     
-    <Button 
-    	android:id="@+id/planet" 
-    	android:layout_width="wrap_content" 
-    	android:layout_height="wrap_content" 
-    	android:text="Planet"
-    	android:layout_gravity="center_vertical" />
-    <Button
-        android:id="@+id/twitter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Twitter"
-        android:layout_gravity="center_vertical" />
-</LinearLayout>
+       
+    
+    
+    
+</RelativeLayout>
+
+  
+
+</RelativeLayout>

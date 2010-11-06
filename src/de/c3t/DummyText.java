@@ -2,7 +2,6 @@ package de.c3t;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.widget.TextView;
 
 public class DummyText extends Activity {
 

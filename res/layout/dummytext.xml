@@ -7,8 +7,8 @@
         android:padding="5dp"
          >
 <TextView
-  android:layout_width="fill_parent"
-  android:layout_height="fill_parent"
-  android:text="Hier ist später der Club Feed."
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:text="Wer das liest ist doof."
   android:layout_gravity="bottom" />
 </LinearLayout>

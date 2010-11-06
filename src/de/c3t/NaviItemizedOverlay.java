@@ -19,7 +19,7 @@ public class NaviItemizedOverlay extends ItemizedOverlay {
 	}
 
 	 public NaviItemizedOverlay(Drawable defaultMarker, Context context) {
-		  super(defaultMarker);
+		  super(boundCenterBottom(defaultMarker));
 		  mContext = context;
 		 }
 	

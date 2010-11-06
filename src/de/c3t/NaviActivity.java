@@ -29,7 +29,7 @@ public class NaviActivity extends MapActivity {
 
 		List<Overlay> mapOverlays = mapView.getOverlays();
 		Drawable drawable = this.getResources().getDrawable(R.drawable.icon);
-		NaviItemizedOverlay itemizedoverlay = new NaviItemizedOverlay(drawable);
+		NaviItemizedOverlay itemizedoverlay = new NaviItemizedOverlay(drawable, this);
 
 		GeoPoint point = new GeoPoint(49764708, 6652758);
 		OverlayItem overlayitem = new OverlayItem(point, "CCC Trier", "Paulinstr. 123");

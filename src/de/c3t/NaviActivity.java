@@ -28,7 +28,7 @@ public class NaviActivity extends MapActivity {
 		mapView.setBuiltInZoomControls(true);
 
 		List<Overlay> mapOverlays = mapView.getOverlays();
-		Drawable drawable = this.getResources().getDrawable(R.drawable.icon);
+		Drawable drawable = this.getResources().getDrawable(R.drawable.pin);
 		NaviItemizedOverlay itemizedoverlay = new NaviItemizedOverlay(drawable, this);
 
 		GeoPoint point = new GeoPoint(49764708, 6652758);

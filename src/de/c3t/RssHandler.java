@@ -1,4 +1,4 @@
-package c3t.de;
+package de.c3t;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -6,7 +6,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import static c3t.de.NewsActivity.*;
+import static de.c3t.NewsActivity.*;
 
 public class RssHandler extends DefaultHandler{
 	private List<Message> messages;

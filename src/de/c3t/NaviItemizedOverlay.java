@@ -1,4 +1,4 @@
-package c3t.de;
+package de.c3t;
 
 import java.util.ArrayList;
 

@@ -15,6 +15,9 @@ import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
 import android.app.Activity;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 public class StatusActivity extends Activity {
@@ -26,24 +29,8 @@ public class StatusActivity extends Activity {
 		setContentView(R.layout.status);
 	}
 
-	public void onStart() {
-		super.onStart();
-		try {
-			fetchStatus();
-		} catch (Exception e) {
-		}
-	}
-
 	public void onResume() {
 		super.onResume();
-		try {
-			fetchStatus();
-		} catch (Exception e) {
-		}
-	}
-
-	public void onRestart() {
-		super.onRestart();
 		try {
 			fetchStatus();
 		} catch (Exception e) {
@@ -63,8 +50,19 @@ public class StatusActivity extends Activity {
 	boolean getStatus() {
 		return isOn;
 	}
+	
+	boolean isOnline() {
+	    ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+	    NetworkInfo netInfo = cm.getActiveNetworkInfo();
+	    if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+	        return true;
+	    }
+	    return false;
+	}
 
 	void fetchStatus() throws XmlPullParserException, ClientProtocolException, URISyntaxException, IOException {
+		if(isOnline())
+		{
 		XmlPullParserFactory factory = null;
 		factory = XmlPullParserFactory.newInstance();
 		factory.setNamespaceAware(true);
@@ -77,7 +75,6 @@ public class StatusActivity extends Activity {
 		while (eventType != XmlPullParser.END_DOCUMENT) {
 
 			if (eventType == XmlPullParser.TEXT) {
-				System.out.println("TEXT Found: " + xpp.getText());
 				if (xpp.getText().compareToIgnoreCase("1") == 0) {
 					setStatusOn();
 				} else if (xpp.getText().compareToIgnoreCase("0") == 0) {
@@ -85,6 +82,7 @@ public class StatusActivity extends Activity {
 				}
 			}
 			eventType = xpp.next();
+		}
 		}
 	}
 

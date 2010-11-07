@@ -1,61 +1,101 @@
 package de.c3t;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
 
-import static de.c3t.NewsActivity.*;
+import android.app.Activity;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
-public class RssHandler extends DefaultHandler{
-	private List<Message> messages;
-	private Message currentMessage;
-	private StringBuilder builder;
-	
-	public List<Message> getMessages(){
-		return this.messages;
-	}
-	@Override
-	public void characters(char[] ch, int start, int length)
-			throws SAXException {
-		super.characters(ch, start, length);
-		builder.append(ch, start, length);
-	}
+class RssHandler extends Activity {
 
-	@Override
-	public void endElement(String uri, String localName, String name)
-			throws SAXException {
-		super.endElement(uri, localName, name);
-		if (this.currentMessage != null){
-			if (localName.equalsIgnoreCase(TITLE)){
-				currentMessage.setTitle(builder.toString());
-			} else if (localName.equalsIgnoreCase(LINK)){
-				currentMessage.setLink(builder.toString());
-			} else if (localName.equalsIgnoreCase(DESCRIPTION)){
-				currentMessage.setDescription(builder.toString());
-			} else if (localName.equalsIgnoreCase(PUB_DATE)){
-				currentMessage.setDate(builder.toString());
-			} else if (localName.equalsIgnoreCase(ITEM)){
-				messages.add(currentMessage);
+	public RssContent fetchRSS(String url) throws XmlPullParserException,
+			ClientProtocolException, URISyntaxException, IOException {
+		if (isOnline()) {
+			List<String> titles = new ArrayList<String>();
+			List<String> links = new ArrayList<String>();
+
+			XmlPullParserFactory factory = null;
+			factory = XmlPullParserFactory.newInstance();
+			factory.setNamespaceAware(true);
+			XmlPullParser xpp = null;
+			xpp = factory.newPullParser();
+
+			xpp.setInput(new InputStreamReader(getUrlData(url)));
+			int eventType = 0;
+			eventType = xpp.getEventType();
+			while (eventType != XmlPullParser.END_DOCUMENT) {
+				if (eventType == XmlPullParser.START_TAG
+						&& xpp.getName().compareToIgnoreCase("item") == 0) {
+					while (eventType != XmlPullParser.END_DOCUMENT) {
+						if (eventType == XmlPullParser.START_TAG) {
+							if (xpp.getName().compareToIgnoreCase("guid") == 0) {
+								links.add(xpp.nextText());
+							} else if (xpp.getName().compareToIgnoreCase(
+									"title") == 0) {
+								titles.add(xpp.nextText());
+							}
+						}
+						eventType = xpp.next();
+					}
+				}
+				eventType = xpp.next();
 			}
-			builder.setLength(0);	
+			RssContent rss = new RssContent(titles, links);
+			return rss;
 		}
+		return null;
+	}
+	
+	private boolean isOnline() {
+		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo netInfo = cm.getActiveNetworkInfo();
+		if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+			return true;
+		}
+		return false;
 	}
 
-	@Override
-	public void startDocument() throws SAXException {
-		super.startDocument();
-		messages = new ArrayList<Message>();
-		builder = new StringBuilder();
+	private InputStream getUrlData(String url) throws URISyntaxException,
+			ClientProtocolException, IOException {
+
+		DefaultHttpClient client = new DefaultHttpClient();
+		HttpGet method = new HttpGet(new URI(url));
+		HttpResponse res = client.execute(method);
+
+		return res.getEntity().getContent();
 	}
 
-	@Override
-	public void startElement(String uri, String localName, String name,
-			Attributes attributes) throws SAXException {
-		super.startElement(uri, localName, name, attributes);
-		if (localName.equalsIgnoreCase(ITEM)){
-			this.currentMessage = new Message();
-		}
+}
+
+class RssContent {
+	List<String> titles = new ArrayList<String>();
+	List<String> links = new ArrayList<String>();
+
+	public RssContent(List<String> titles, List<String> links) {
+		this.titles = titles;
+		this.links = links;
+	}
+
+	public List<String> getTitles() {
+		return titles;
+	}
+
+	public List<String> getLinks() {
+		return links;
 	}
 }

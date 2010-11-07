@@ -42,53 +42,52 @@ public class StatusActivity extends Activity {
 	void setStatusOn() {
 		findViewById(R.id.StatusLayout).setBackgroundResource(R.drawable.status_on);
 		ImageView image = (ImageView) findViewById(R.id.StatusLogo);
-		image.setImageResource(R.drawable.status_led_on);
+		image.setImageResource(R.drawable.status_porta_on);
 		isOn = true;
 	}
 
 	void setStatusOff() {
 		findViewById(R.id.StatusLayout).setBackgroundResource(R.drawable.status_off);
 		ImageView image = (ImageView) findViewById(R.id.StatusLogo);
-		image.setImageResource(R.drawable.status_led_off);
+		image.setImageResource(R.drawable.status_porta_off);
 		isOn = false;
 	}
 
 	boolean getStatus() {
 		return isOn;
 	}
-	
+
 	boolean isOnline() {
-	    ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-	    NetworkInfo netInfo = cm.getActiveNetworkInfo();
-	    if (netInfo != null && netInfo.isConnectedOrConnecting()) {
-	        return true;
-	    }
-	    return false;
+		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo netInfo = cm.getActiveNetworkInfo();
+		if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+			return true;
+		}
+		return false;
 	}
 
 	void fetchStatus() throws XmlPullParserException, ClientProtocolException, URISyntaxException, IOException {
-		if(isOnline())
-		{
-		XmlPullParserFactory factory = null;
-		factory = XmlPullParserFactory.newInstance();
-		factory.setNamespaceAware(true);
-		XmlPullParser xpp = null;
-		xpp = factory.newPullParser();
+		if (isOnline()) {
+			XmlPullParserFactory factory = null;
+			factory = XmlPullParserFactory.newInstance();
+			factory.setNamespaceAware(true);
+			XmlPullParser xpp = null;
+			xpp = factory.newPullParser();
 
-		xpp.setInput(new InputStreamReader(getUrlData("http://c3t.de/club/flag.xml")));
-		int eventType = 0;
-		eventType = xpp.getEventType();
-		while (eventType != XmlPullParser.END_DOCUMENT) {
+			xpp.setInput(new InputStreamReader(getUrlData("http://c3t.de/club/flag.xml")));
+			int eventType = 0;
+			eventType = xpp.getEventType();
+			while (eventType != XmlPullParser.END_DOCUMENT) {
 
-			if (eventType == XmlPullParser.TEXT) {
-				if (xpp.getText().compareToIgnoreCase("1") == 0) {
-					setStatusOn();
-				} else if (xpp.getText().compareToIgnoreCase("0") == 0) {
-					setStatusOff();
+				if (eventType == XmlPullParser.TEXT) {
+					if (xpp.getText().compareToIgnoreCase("1") == 0) {
+						setStatusOn();
+					} else if (xpp.getText().compareToIgnoreCase("0") == 0) {
+						setStatusOff();
+					}
 				}
+				eventType = xpp.next();
 			}
-			eventType = xpp.next();
-		}
 		}
 	}
 

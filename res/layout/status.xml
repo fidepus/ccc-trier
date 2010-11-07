@@ -12,5 +12,5 @@
     android:layout_gravity="center|center_horizontal"
     android:layout_centerHorizontal="true"
     android:layout_centerVertical="true"
-    android:src="@drawable/status_led_off" />
+    android:src="@drawable/status_porta_off" />
 </RelativeLayout>

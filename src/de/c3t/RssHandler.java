@@ -21,11 +21,10 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-class RssHandler extends Activity {
+class RssHandler {
 
 	public RssContent fetchRSS(String url) throws XmlPullParserException,
 			ClientProtocolException, URISyntaxException, IOException {
-		if (isOnline()) {
 			List<String> titles = new ArrayList<String>();
 			List<String> links = new ArrayList<String>();
 
@@ -57,19 +56,8 @@ class RssHandler extends Activity {
 			}
 			RssContent rss = new RssContent(titles, links);
 			return rss;
-		}
-		return null;
 	}
 	
-	private boolean isOnline() {
-		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo netInfo = cm.getActiveNetworkInfo();
-		if (netInfo != null && netInfo.isConnectedOrConnecting()) {
-			return true;
-		}
-		return false;
-	}
-
 	private InputStream getUrlData(String url) throws URISyntaxException,
 			ClientProtocolException, IOException {
 

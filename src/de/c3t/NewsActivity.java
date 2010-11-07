@@ -45,9 +45,9 @@ public class NewsActivity extends Activity {
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
             //	Toast.makeText(NewsActivity.this, "hello", Toast.LENGTH_LONG).show();
-            	Intent showClubListIntent=new Intent(NewsActivity.this,DummyText.class);
+            	Intent showClubListIntent=new Intent(NewsActivity.this,RssList.class);
             	startActivity(showClubListIntent);
-            	View view = NewsActivityGroup.group.getLocalActivityManager().startActivity("DummyText", showClubListIntent).getDecorView();
+            	View view = NewsActivityGroup.group.getLocalActivityManager().startActivity("RssList", showClubListIntent).getDecorView();
             	
             	NewsActivityGroup.group.setContentView(view);
             }

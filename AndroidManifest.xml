@@ -20,6 +20,8 @@
         <activity android:name="MessageList"></activity>
         <activity android:name="DummyText"></activity>
         <activity android:name="NewsActivityGroup"></activity>
+        <activity android:name="RssList"></activity>
+        <activity android:name="WebViewer"></activity>
     </application>
     <uses-sdk android:minSdkVersion="4" />
 

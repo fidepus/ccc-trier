@@ -25,13 +25,14 @@ public class NaviActivity extends MapActivity {
 		MapView mapView = (MapView) findViewById(R.id.mapview);
 		MapController mapController = mapView.getController();
 		mapController.setZoom(15);
+		GeoPoint point = new GeoPoint(49764708, 6652758);
+		mapController.animateTo(point);
 		mapView.setBuiltInZoomControls(true);
 
 		List<Overlay> mapOverlays = mapView.getOverlays();
 		Drawable drawable = this.getResources().getDrawable(R.drawable.pin);
 		NaviItemizedOverlay itemizedoverlay = new NaviItemizedOverlay(drawable, this);
 
-		GeoPoint point = new GeoPoint(49764708, 6652758);
 		OverlayItem overlayitem = new OverlayItem(point, "CCC Trier", "Paulinstr. 123");
 
 		itemizedoverlay.addOverlay(overlayitem);

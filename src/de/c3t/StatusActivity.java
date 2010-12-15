@@ -48,21 +48,25 @@ public class StatusActivity extends Activity {
 		ImageView image = (ImageView) findViewById(R.id.StatusLogo);
 		image.setImageResource(R.drawable.status_porta_on);
 		isOn = true;
+		
+		
 		String ns = Context.NOTIFICATION_SERVICE;
 		NotificationManager mNotificationManager = (NotificationManager) getSystemService(ns);
-		int icon = R.drawable.status_porta_on;
+		
+		int icon = R.drawable.status_porta_off;
 		CharSequence tickerText = "Es ist Club!";
 		long when = System.currentTimeMillis();
 
 		Notification notification = new Notification(icon, tickerText, when);
+		notification.defaults |= Notification.DEFAULT_VIBRATE;
 		Context context = getApplicationContext();
-		CharSequence contentTitle = "My notification";
-		CharSequence contentText = "Hello World!";
-		Intent notificationIntent = new Intent(this, StatusActivity.class);
+		CharSequence contentTitle = "Es ist Club!";
+		CharSequence contentText = "Shut up and hack!";
+		Intent notificationIntent = new Intent(this, CCCTrier.class);
 		PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
 		notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
-		private static final int HELLO_ID = 1;
+		final int HELLO_ID = 1;
 
 		mNotificationManager.notify(HELLO_ID, notification);
 	}

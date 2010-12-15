@@ -15,7 +15,11 @@ import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -44,6 +48,23 @@ public class StatusActivity extends Activity {
 		ImageView image = (ImageView) findViewById(R.id.StatusLogo);
 		image.setImageResource(R.drawable.status_porta_on);
 		isOn = true;
+		String ns = Context.NOTIFICATION_SERVICE;
+		NotificationManager mNotificationManager = (NotificationManager) getSystemService(ns);
+		int icon = R.drawable.status_porta_on;
+		CharSequence tickerText = "Es ist Club!";
+		long when = System.currentTimeMillis();
+
+		Notification notification = new Notification(icon, tickerText, when);
+		Context context = getApplicationContext();
+		CharSequence contentTitle = "My notification";
+		CharSequence contentText = "Hello World!";
+		Intent notificationIntent = new Intent(this, StatusActivity.class);
+		PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+
+		notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
+		private static final int HELLO_ID = 1;
+
+		mNotificationManager.notify(HELLO_ID, notification);
 	}
 
 	void setStatusOff() {

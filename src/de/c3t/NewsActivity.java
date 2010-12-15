@@ -7,8 +7,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.c3t.DummyText;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

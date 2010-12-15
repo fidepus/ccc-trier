@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ImageView;
 
@@ -59,6 +60,8 @@ public class StatusActivity extends Activity {
 
 		Notification notification = new Notification(icon, tickerText, when);
 		notification.defaults |= Notification.DEFAULT_VIBRATE;
+		notification.sound = Uri.parse("android.resource://de.c3t/" +R.raw.notification); 
+		notification.flags |= Notification.FLAG_AUTO_CANCEL;
 		Context context = getApplicationContext();
 		CharSequence contentTitle = "Es ist Club!";
 		CharSequence contentText = "Shut up and hack!";

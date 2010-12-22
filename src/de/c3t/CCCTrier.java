@@ -13,6 +13,7 @@ public class CCCTrier extends TabActivity
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		startService(new Intent(this, OnlineService.class));
 		TabHost tabHost = getTabHost();
 		tabHost.addTab(tabHost.newTabSpec("1").setIndicator("News", getResources().getDrawable(R.drawable.ic_tab_news)).setContent(new Intent(this, RssList.class)));
 		tabHost.addTab(tabHost.newTabSpec("2").setIndicator("Status", getResources().getDrawable(R.drawable.ic_tab_status)).setContent(new Intent(this, StatusActivity.class)));

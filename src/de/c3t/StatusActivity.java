@@ -34,7 +34,7 @@ public class StatusActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.status);
 		findViewById(R.id.StatusLayout).getBackground().setDither(true);
-	}
+			}
 
 	public void onResume() {
 		super.onResume();

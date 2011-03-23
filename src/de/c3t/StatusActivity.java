@@ -50,17 +50,16 @@ public class StatusActivity extends Activity {
 		image.setImageResource(R.drawable.status_porta_on);
 		isOn = true;
 		
-		
 		String ns = Context.NOTIFICATION_SERVICE;
 		NotificationManager mNotificationManager = (NotificationManager) getSystemService(ns);
-		
+
 		int icon = R.drawable.status_porta_off;
 		CharSequence tickerText = "Es ist Club!";
 		long when = System.currentTimeMillis();
 
 		Notification notification = new Notification(icon, tickerText, when);
 		notification.defaults |= Notification.DEFAULT_VIBRATE;
-		notification.sound = Uri.parse("android.resource://de.c3t/" +R.raw.notification); 
+		notification.sound = Uri.parse("android.resource://de.c3t/" + R.raw.notification);
 		notification.flags |= Notification.FLAG_AUTO_CANCEL;
 		Context context = getApplicationContext();
 		CharSequence contentTitle = "Es ist Club!";

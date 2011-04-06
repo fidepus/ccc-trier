@@ -36,6 +36,8 @@ public class OnlineService extends Service {
 		Toast toast = Toast.makeText(context, text, duration);
 		toast.show();
 		timer = new Timer();
+
+		clubStatus = new ClubStatus(this);
 	}
 
 	@Override

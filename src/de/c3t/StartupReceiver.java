@@ -8,9 +8,7 @@ public class StartupReceiver extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent indent) {
-		Intent serviceIntent = new Intent();
-		serviceIntent.setAction("de.c3t.OnlineService");
-		context.startService(serviceIntent);
+		context.startService(new Intent(context, OnlineService.class));
 	}
 
 }

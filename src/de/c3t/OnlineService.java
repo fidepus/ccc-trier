@@ -1,8 +1,5 @@
 package de.c3t;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -11,12 +8,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.IBinder;
-import android.widget.Toast;
 
 public class OnlineService extends Service {
-	private static final String TAG = "C3TOnlineService";
+	//private static final String TAG = "C3TOnlineService";
 
-	private Timer timer;
+	//private Timer timer;
 
 	private boolean clubOnline = true;
 
@@ -29,44 +25,31 @@ public class OnlineService extends Service {
 
 	@Override
 	public void onCreate() {
-		Context context = getApplicationContext();
-		CharSequence text = "Service created.";
-		int duration = Toast.LENGTH_SHORT;
-
-		Toast toast = Toast.makeText(context, text, duration);
-		toast.show();
-		timer = new Timer();
+		//timer = new Timer();
 
 		clubStatus = new ClubStatus(this);
 	}
 
 	@Override
-	public void onDestroy() {
-		Context context = getApplicationContext();
-		CharSequence text = "Service destroyed.";
-		int duration = Toast.LENGTH_SHORT;
-
-		Toast toast = Toast.makeText(context, text, duration);
-		toast.show();
-		timer.cancel();
-	}
-
-	@Override
 	public void onStart(Intent intent, int startid) {
-		Context context = getApplicationContext();
-		CharSequence text = "Service started.";
-		int duration = Toast.LENGTH_SHORT;
-
-		Toast toast = Toast.makeText(context, text, duration);
-		toast.show();
-		timer.scheduleAtFixedRate(new TimerTask() {
+		//timer.scheduleAtFixedRate(new TimerTask() { 
+			//public void run() {
+	//you don't know how much RAM a timer needs…
+		new Thread(new Runnable() {
+			
 			public void run() {
-				boolean newClubStatus = clubStatus.getStatus();
-				if (!clubOnline && newClubStatus) // Club is online now but wasn't at the last check
-					sendNotification();
-				clubOnline = newClubStatus;
+				while (true) { 
+					boolean newClubStatus = clubStatus.getStatus();
+					if (!clubOnline && newClubStatus) // Club is online now but wasn't at the last check
+						sendNotification();
+					clubOnline = newClubStatus;
+					try {Thread.sleep(60*60*1000);} catch (InterruptedException e) {}
+			}				
 			}
-		}, 0, 60 * 1000);
+		}).start();
+
+			//}
+		//}, 0, 60*60 * 1000);
 	}
 
 	void sendNotification() {

@@ -15,16 +15,15 @@ import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 public class ClubStatus {
-	private ContextWrapper cw;
+	private Context cw;
 
 	private boolean clubOnline = false;
 
-	public ClubStatus(ContextWrapper cw) {
+	public ClubStatus(Context cw) {
 		this.cw = cw; // This is a reference to the activity or service that created this Object, this
 		// is necessary to find out if we are connected to the internet
 	}
@@ -46,7 +45,7 @@ public class ClubStatus {
 			XmlPullParser xpp = null;
 			xpp = factory.newPullParser();
 
-			xpp.setInput(new InputStreamReader(getUrlData("http://c3t.de/club/flag.xml")));
+			xpp.setInput(new InputStreamReader(getUrlData("http://192.168.178.86/android-clubstatus/flag.xml")));
 			int eventType = 0;
 			eventType = xpp.getEventType();
 			while (eventType != XmlPullParser.END_DOCUMENT) {

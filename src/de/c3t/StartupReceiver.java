@@ -8,7 +8,8 @@ public class StartupReceiver extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent indent) {
-		context.startService(new Intent(context, OnlineService.class));
+		//context.startService(new Intent(context, OnlineService.class));
+		C2DM.registerC2DM(context);
 	}
 
 }

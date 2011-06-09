@@ -1,4 +1,4 @@
-<Files *>
+<Files *.sqlite>
 	Order allow,deny
 	Deny from all
 	Satisfy all

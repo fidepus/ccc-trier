@@ -42,7 +42,7 @@ public class C2DM extends BroadcastReceiver {
 			new Thread(new Runnable() {
 
 				public void run() {
-					sendGetRequest("http://192.168.178.86/android-clubstatus/handleRegistration.php?registration_id=" + registration);
+					sendGetRequest("http://10.23.5.136/android-clubstatus/handleRegistration.php?registration_id=" + registration);
 				}
 
 			}).start();
@@ -83,7 +83,7 @@ public class C2DM extends BroadcastReceiver {
 	public static void registerC2DM(Context context){
 		Intent registrationIntent = new Intent("com.google.android.c2dm.intent.REGISTER");
 		registrationIntent.putExtra("app", PendingIntent.getBroadcast(context, 0, new Intent(), 0)); // boilerplate
-		registrationIntent.putExtra("sender", "c3tapp@googlemail.com");
+		registrationIntent.putExtra("sender", "c3tapp@gmail.com");
 		context.startService(registrationIntent);
 	}
 	

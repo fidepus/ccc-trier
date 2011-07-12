@@ -12,7 +12,7 @@ public class CCCTrier extends TabActivity
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		C2DM.registerC2DM(this);
+		C2DM.registerC2DM(this); //i'll change this back when i finished debugging c2dm with an emulator without all libs
 		/*
 
 		startService(new Intent(this, OnlineService.class));

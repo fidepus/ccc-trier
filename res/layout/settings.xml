@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+        <PreferenceCategory
+                android:title="Settings">
+                <CheckBoxPreference
+                        android:title="Push-Notification"
+                        android:defaultValue="false"
+                        android:summary="Use C2DM to recive notifications about the clubstatus."
+                        android:key="C2DM" />
+        </PreferenceCategory>
+</PreferenceScreen>

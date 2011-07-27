@@ -12,13 +12,12 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 
 public class C2DM extends BroadcastReceiver {
-	private static boolean clubOnline = true;
-	
 	public void onReceive(Context context, Intent intent) {
-		System.out.println("OnRecive "+intent.getAction());
+		System.out.println("OnRecive " + intent.getAction());
 		if (intent.getAction().equals("com.google.android.c2dm.intent.REGISTRATION")) {
 			handleRegistration(context, intent);
 		} else if (intent.getAction().equals("com.google.android.c2dm.intent.RECEIVE")) {
@@ -42,7 +41,7 @@ public class C2DM extends BroadcastReceiver {
 			new Thread(new Runnable() {
 
 				public void run() {
-					sendGetRequest("http://10.23.5.136/android-clubstatus/handleRegistration.php?registration_id=" + registration);
+					sendGetRequest("http://10.23.5.137/android-clubstatus/handleRegistration.php?registration_id=" + registration);
 				}
 
 			}).start();
@@ -50,11 +49,18 @@ public class C2DM extends BroadcastReceiver {
 	}
 
 	private void handleMessage(Context context, Intent intent) {
+		SharedPreferences settings = context.getSharedPreferences("c3tStatus", 0);
+		boolean clubOnline = settings.getBoolean("status", true);
 		ClubStatus cs = new ClubStatus(context);
 		boolean newStatus = cs.getStatus();
-		if(!clubOnline && newStatus)
+		if (!clubOnline && newStatus)
 			sendNotification(context);
-		clubOnline = newStatus;
+		System.out.println("C2DM: recived C2DM-Message, old status: "+clubOnline+", new status: "+newStatus);
+		if (clubOnline != newStatus){
+			SharedPreferences.Editor editor = settings.edit();
+			editor.putBoolean("status", newStatus);
+			editor.commit();
+		}	
 	}
 
 	public static void sendGetRequest(String file) {
@@ -79,14 +85,19 @@ public class C2DM extends BroadcastReceiver {
 		} catch (MalformedURLException e1) {
 		}
 	}
-	
-	public static void registerC2DM(Context context){
+
+	public static void registerC2DM(Context context) {
 		Intent registrationIntent = new Intent("com.google.android.c2dm.intent.REGISTER");
 		registrationIntent.putExtra("app", PendingIntent.getBroadcast(context, 0, new Intent(), 0)); // boilerplate
 		registrationIntent.putExtra("sender", "c3tapp@gmail.com");
 		context.startService(registrationIntent);
 	}
-	
+
+	public static void unRegisterC2DM(Context context) {
+		Intent unregIntent = new Intent("com.google.android.c2dm.intent.UNREGISTER");
+		unregIntent.putExtra("app", PendingIntent.getBroadcast(context, 0, new Intent(), 0));
+		context.startService(unregIntent);
+	}
 
 	void sendNotification(Context context) {
 		String ns = Context.NOTIFICATION_SERVICE;
@@ -101,7 +112,7 @@ public class C2DM extends BroadcastReceiver {
 		notification.sound = Uri.parse("android.resource://de.c3t/" + R.raw.notification);
 		notification.flags |= Notification.FLAG_AUTO_CANCEL;
 		CharSequence contentTitle = "Es ist Club!";
-		CharSequence contentText = "Shut up and hack!";
+		CharSequence contentText = "Get up and hack!";
 		Intent notificationIntent = new Intent(context, CCCTrier.class);
 		PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
 

@@ -36,28 +36,6 @@ public class StatusActivity extends Activity {
 		ImageView image = (ImageView) findViewById(R.id.StatusLogo);
 		image.setImageResource(R.drawable.status_porta_on);
 		isOn = true;
-
-		String ns = Context.NOTIFICATION_SERVICE;
-		NotificationManager mNotificationManager = (NotificationManager) getSystemService(ns);
-
-		int icon = R.drawable.status_porta_off;
-		CharSequence tickerText = "Es ist Club!";
-		long when = System.currentTimeMillis();
-
-		Notification notification = new Notification(icon, tickerText, when);
-		notification.defaults |= Notification.DEFAULT_VIBRATE;
-		notification.sound = Uri.parse("android.resource://de.c3t/" + R.raw.notification);
-		notification.flags |= Notification.FLAG_AUTO_CANCEL;
-		Context context = getApplicationContext();
-		CharSequence contentTitle = "Es ist Club!";
-		CharSequence contentText = "Shut up and hack!";
-		Intent notificationIntent = new Intent(this, CCCTrier.class);
-		PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-
-		notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
-		final int HELLO_ID = 1;
-
-		mNotificationManager.notify(HELLO_ID, notification);
 	}
 
 	void setStatusOff() {

@@ -45,7 +45,7 @@ public class ClubStatus {
 			XmlPullParser xpp = null;
 			xpp = factory.newPullParser();
 
-			xpp.setInput(new InputStreamReader(getUrlData("http://10.23.5.137/android-clubstatus/flag.xml")));
+			xpp.setInput(new InputStreamReader(getUrlData("http://c3t.de/club/flag.xml")));
 			int eventType = 0;
 			eventType = xpp.getEventType();
 			while (eventType != XmlPullParser.END_DOCUMENT) {

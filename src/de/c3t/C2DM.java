@@ -41,7 +41,7 @@ public class C2DM extends BroadcastReceiver {
 			new Thread(new Runnable() {
 
 				public void run() {
-					sendGetRequest("http://10.23.5.137/android-clubstatus/handleRegistration.php?registration_id=" + registration);
+					sendGetRequest("http://84.200.208.230/android-clubstatus/handleRegistration.php?registration_id=" + registration);
 				}
 
 			}).start();

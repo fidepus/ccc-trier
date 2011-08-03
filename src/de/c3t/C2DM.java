@@ -103,7 +103,7 @@ public class C2DM extends BroadcastReceiver {
 		String ns = Context.NOTIFICATION_SERVICE;
 		NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(ns);
 
-		int icon = R.drawable.status_porta_off;
+		int icon = R.drawable.notification_status_porta_off;
 		CharSequence tickerText = "Es ist Club!";
 		long when = System.currentTimeMillis();
 

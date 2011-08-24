@@ -45,10 +45,9 @@ public class RssList extends ListActivity {
 
 					Intent intent = new Intent(RssList.this, WebViewer.class);
 					intent.putExtra("data",rssContent.texts.get(position));
+					intent.putExtra("baseURL",clubRss);
+
 					startActivity(intent);
-					// When clicked, show a toast with the TextView text
-					
-					//Toast.makeText(getApplicationContext(), rssContent.texts.get(position), Toast.LENGTH_SHORT).show();
 				}
 			});
 		}

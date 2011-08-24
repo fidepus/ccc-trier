@@ -19,8 +19,8 @@ public class WebViewer extends Activity {
 			mWebView.loadUrl(URL);
 		else {
 			String data = getIntent().getStringExtra("data");
-			mWebView.loadData(data, "text/html", "utf-8");
-			
+			String baseURL = getIntent().getStringExtra("baseURL");
+			mWebView.loadDataWithBaseURL(baseURL, data, "text/html", "utf-8", null);
 		}
 	}
 }

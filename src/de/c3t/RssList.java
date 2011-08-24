@@ -2,6 +2,7 @@ package de.c3t;
 
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -9,7 +10,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class RssList extends ListActivity {
@@ -43,12 +43,12 @@ public class RssList extends ListActivity {
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
 
-					/*Intent intent = new Intent(RssList.this, WebViewer.class);
-					intent.putExtra("URL",links.get(position));
-					startActivity(intent);*/
+					Intent intent = new Intent(RssList.this, WebViewer.class);
+					intent.putExtra("data",rssContent.texts.get(position));
+					startActivity(intent);
 					// When clicked, show a toast with the TextView text
 					
-					Toast.makeText(getApplicationContext(), rssContent.texts.get(position), Toast.LENGTH_SHORT).show();
+					//Toast.makeText(getApplicationContext(), rssContent.texts.get(position), Toast.LENGTH_SHORT).show();
 				}
 			});
 		}

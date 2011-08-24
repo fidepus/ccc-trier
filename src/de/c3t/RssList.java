@@ -1,18 +1,16 @@
 package de.c3t;
 
-import java.util.List;
-
 import android.app.ListActivity;
 import android.content.Context;
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class RssList extends ListActivity {
 
@@ -25,15 +23,12 @@ public class RssList extends ListActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		final List<String> links;
-
 		RssHandler rssHandler = new RssHandler();
-		RssContent rssContent = null;
+		final RssContent rssContent;
 
 		if (isOnline()) {
 			try {
 				rssContent = rssHandler.fetchRSS(clubRss);
-				links = rssContent.getLinks();
 			} catch (Exception e) {
 				return;
 			}
@@ -48,13 +43,12 @@ public class RssList extends ListActivity {
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
 
-					Intent intent = new Intent(RssList.this, WebViewer.class);
+					/*Intent intent = new Intent(RssList.this, WebViewer.class);
 					intent.putExtra("URL",links.get(position));
-					startActivity(intent);
+					startActivity(intent);*/
 					// When clicked, show a toast with the TextView text
-					// Toast.makeText(getApplicationContext(),
-					// links.get(position),
-					// Toast.LENGTH_SHORT).show();
+					
+					Toast.makeText(getApplicationContext(), rssContent.texts.get(position), Toast.LENGTH_SHORT).show();
 				}
 			});
 		}

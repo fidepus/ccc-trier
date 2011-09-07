@@ -23,7 +23,6 @@ build
 
 # java compiled
 *.class
-*.jar
 
 # project-specific files
 

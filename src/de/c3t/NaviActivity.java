@@ -56,6 +56,7 @@ public class NaviActivity extends MapActivity {
 		super.onResume();
 		// when our activity resumes, we want to register for location updates
 		myLocationOverlay.enableMyLocation();
+		myLocationOverlay.enableCompass();
 	}
 
 	@Override
@@ -63,6 +64,7 @@ public class NaviActivity extends MapActivity {
 		super.onPause();
 		// when our activity pauses, we want to remove listening for location updates
 		myLocationOverlay.disableMyLocation();
+		myLocationOverlay.disableCompass();
 	}
 	
 	private void zoomToMyLocation() {

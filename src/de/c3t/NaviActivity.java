@@ -44,8 +44,8 @@ public class NaviActivity extends MapActivity {
 		MapView mapView = (MapView) findViewById(R.id.mapview);
 		MapController mapController = mapView.getController();
 		mapController.setZoom(15);
-		GeoPoint point = new GeoPoint(49764708, 6652758);
-		mapController.animateTo(point);
+		GeoPoint clubCoordinates = new GeoPoint(49764708, 6652758);
+		mapController.animateTo(clubCoordinates);
 		mapView.setBuiltInZoomControls(true);
 
 		// create an overlay that shows our current location
@@ -58,27 +58,24 @@ public class NaviActivity extends MapActivity {
 		mapView.getOverlays().add(myLocationOverlay);
 		mapView.postInvalidate();
 
-		OverlayItem overlayitem = new OverlayItem(point, "CCC Trier", "Paulinstr. 123");
+		OverlayItem overlayitem = new OverlayItem(clubCoordinates, "CCC Trier", "Paulinstr. 123");
 
 		itemizedoverlay.addOverlay(overlayitem);
 		PathOverlay pathOverlay = new PathOverlay();
 		mapOverlays.add(pathOverlay);
 		if (myLocationOverlay.getMyLocation() != null)
-			showRoute(pathOverlay, myLocationOverlay.getMyLocation());
+			showRoute(pathOverlay, myLocationOverlay.getMyLocation(), clubCoordinates);
 		else {
-			System.out.println("de.c3t.NaviActivity: no location -> using hardcodet Debuglocation, please remove it on release"); // TODO:
-			// remove
-			// next
-			// line
-			showRoute(pathOverlay, new GeoPoint(49753764, 6645781));
+			System.out.println("de.c3t.NaviActivity: no location -> no route");
 		}
 		mapOverlays.add(itemizedoverlay);
 	}
 
-	private void showRoute(PathOverlay overlay, GeoPoint start) {
+	private void showRoute(PathOverlay overlay, GeoPoint start, GeoPoint end) {
 		System.out.println("de.c3t.NaviActivity: LOCATION: " + start.toString());
-		Location l = toLocation(start);
-		String url = getRouteXMLURL(l.getLatitude() + "," + l.getLongitude());
+		Location lstart = toLocation(start);
+		Location lend = toLocation(end);
+		String url = getRouteXMLURL(lstart.getLatitude() + "," + lstart.getLongitude(), lend.getLatitude() + "," + lend.getLongitude());
 		System.out.println("de.c3t.NaviActivity: using URL " + url);
 		try {
 			XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
@@ -158,8 +155,8 @@ public class NaviActivity extends MapActivity {
 		}
 	}
 
-	private String getRouteXMLURL(String origin) {
-		return "http://maps.googleapis.com/maps/api/directions/xml?origin=" + origin + "&destination=49.7647300,6.6520800&sensor=true";
+	private String getRouteXMLURL(String start, String end) {
+		return "http://maps.googleapis.com/maps/api/directions/xml?origin=" + start + "&destination=" + end + "&sensor=true";
 	}
 
 	public static Location toLocation(GeoPoint point) {

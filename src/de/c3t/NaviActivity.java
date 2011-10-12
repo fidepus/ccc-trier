@@ -23,6 +23,8 @@ import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
 
+import de.c3t.NaviActivityHelper.PathOverlay;
+
 public class NaviActivity extends MapActivity {
 	private MapView mapView;
 
@@ -59,18 +61,18 @@ public class NaviActivity extends MapActivity {
 		OverlayItem overlayitem = new OverlayItem(point, "CCC Trier", "Paulinstr. 123");
 
 		itemizedoverlay.addOverlay(overlayitem);
-
+		PathOverlay pathOverlay = new PathOverlay();
+		mapOverlays.add(pathOverlay);
 		if (myLocationOverlay.getMyLocation() != null)
-			showRoute(itemizedoverlay, myLocationOverlay.getMyLocation());
+			showRoute(pathOverlay, myLocationOverlay.getMyLocation());
 		else {
 			System.out.println("de.c3t.NaviActivity: no location -> using hardcodet Debuglocation, please remove it on release"); // TODO: remove next line
-			showRoute(itemizedoverlay, new GeoPoint(49753864, 6645781));
+			showRoute(pathOverlay, new GeoPoint(49853764, 6645781));
 		}
 		mapOverlays.add(itemizedoverlay);
 	}
 
-	private void showRoute(NaviItemizedOverlay overlay, GeoPoint start) {
-		overlay.addOverlay(new OverlayItem(start, "Start", ""));
+	private void showRoute(PathOverlay overlay, GeoPoint start) {
 		System.out.println("de.c3t.NaviActivity: LOCATION: " + start.toString());
 		Location l = toLocation(start);
 		String url = getRouteXMLURL(l.getLatitude() + "," + l.getLongitude());
@@ -86,8 +88,9 @@ public class NaviActivity extends MapActivity {
 			int state = 0;// 1 = next text is lat //2 = next text is lng
 			int lat6 = 0, lon6 = 0;
 			eventType = xpp.getEventType();
+			
 			while (eventType != XmlPullParser.END_DOCUMENT) {
-				System.out.println("de.c3t " + xpp.getName());
+				//System.out.println("de.c3t " + xpp.getName());
 				if (eventType == XmlPullParser.START_TAG) {
 					if (xpp.getName().equals("lat"))
 						state = 1;
@@ -99,7 +102,7 @@ public class NaviActivity extends MapActivity {
 						state = 0;
 					} else if (state == 2) {
 						lon6 = toMicroDegrees(Float.parseFloat(xpp.getText()));
-						overlay.addOverlay(new OverlayItem(new GeoPoint(lat6, lon6), "waypoint", ""));
+						overlay.addPoint(new GeoPoint(lat6, lon6));
 						System.out.println("de.c3t.NaviActivity: adding waypoint " + lat6 + "," + lon6);
 						state = 0;
 					}
@@ -167,7 +170,7 @@ public class NaviActivity extends MapActivity {
 	}
 
 	public static int toMicroDegrees(double degrees) {
-		return (int) degrees * 1000000;
+		return (int) (degrees * 1000000);
 	}
 
 	/*

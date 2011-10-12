@@ -66,8 +66,11 @@ public class NaviActivity extends MapActivity {
 		if (myLocationOverlay.getMyLocation() != null)
 			showRoute(pathOverlay, myLocationOverlay.getMyLocation());
 		else {
-			System.out.println("de.c3t.NaviActivity: no location -> using hardcodet Debuglocation, please remove it on release"); // TODO: remove next line
-			showRoute(pathOverlay, new GeoPoint(49853764, 6645781));
+			System.out.println("de.c3t.NaviActivity: no location -> using hardcodet Debuglocation, please remove it on release"); // TODO:
+			// remove
+			// next
+			// line
+			showRoute(pathOverlay, new GeoPoint(49753764, 6645781));
 		}
 		mapOverlays.add(itemizedoverlay);
 	}
@@ -85,17 +88,22 @@ public class NaviActivity extends MapActivity {
 
 			xpp.setInput(new InputStreamReader(ClubStatus.getUrlData(url)));
 			int eventType = 0;
-			int state = 0;// 1 = next text is lat //2 = next text is lng
+			int state = 0;// 1 = next text is lat //2 = next text is lng //3 = ignore cords
 			int lat6 = 0, lon6 = 0;
 			eventType = xpp.getEventType();
-			
+
 			while (eventType != XmlPullParser.END_DOCUMENT) {
-				//System.out.println("de.c3t " + xpp.getName());
+				// System.out.println("de.c3t " + xpp.getName());
 				if (eventType == XmlPullParser.START_TAG) {
-					if (xpp.getName().equals("lat"))
-						state = 1;
-					else if (xpp.getName().equals("lng"))
-						state = 2;
+					if (state != 3) {
+						if (xpp.getName().equals("lat"))
+							state = 1;
+						else if (xpp.getName().equals("lng"))
+							state = 2;
+					} else {
+						if (xpp.getName().equals("step"))
+							state = 0;
+					}
 				} else if (eventType == XmlPullParser.TEXT) {
 					if (state == 1) {
 						lat6 = toMicroDegrees(Float.parseFloat(xpp.getText()));
@@ -106,6 +114,9 @@ public class NaviActivity extends MapActivity {
 						System.out.println("de.c3t.NaviActivity: adding waypoint " + lat6 + "," + lon6);
 						state = 0;
 					}
+				} else if (eventType == XmlPullParser.END_TAG) {
+					if (xpp.getName().equals("step"))
+						state = 3;
 				}
 
 				eventType = xpp.next();

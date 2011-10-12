@@ -44,7 +44,7 @@ public class NaviActivity extends MapActivity {
 		MapView mapView = (MapView) findViewById(R.id.mapview);
 		MapController mapController = mapView.getController();
 		mapController.setZoom(15);
-		GeoPoint clubCoordinates = new GeoPoint(49764708, 6652758);
+		final GeoPoint clubCoordinates = new GeoPoint(49764708, 6652758);
 		mapController.animateTo(clubCoordinates);
 		mapView.setBuiltInZoomControls(true);
 
@@ -61,13 +61,17 @@ public class NaviActivity extends MapActivity {
 		OverlayItem overlayitem = new OverlayItem(clubCoordinates, "CCC Trier", "Paulinstr. 123");
 
 		itemizedoverlay.addOverlay(overlayitem);
-		PathOverlay pathOverlay = new PathOverlay();
+		final PathOverlay pathOverlay = new PathOverlay();
 		mapOverlays.add(pathOverlay);
-		if (myLocationOverlay.getMyLocation() != null)
-			showRoute(pathOverlay, myLocationOverlay.getMyLocation(), clubCoordinates);
-		else {
-			System.out.println("de.c3t.NaviActivity: no location -> no route");
-		}
+		new Thread(new Runnable() {
+			public void run() {
+				if (myLocationOverlay.getMyLocation() != null)
+					showRoute(pathOverlay, myLocationOverlay.getMyLocation(), clubCoordinates);
+				else {
+					System.out.println("de.c3t.NaviActivity: no location -> no route");
+				}
+			}
+		}).start();
 		mapOverlays.add(itemizedoverlay);
 	}
 

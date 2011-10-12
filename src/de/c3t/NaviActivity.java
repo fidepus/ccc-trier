@@ -10,8 +10,11 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -73,12 +76,31 @@ public class NaviActivity extends MapActivity {
 			}
 		}).start();
 		mapOverlays.add(itemizedoverlay);
+		LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+
+		LocationListener locationListener = new LocationListener() {
+			public void onLocationChanged(Location location) {
+				showRoute(pathOverlay, location, toLocation(clubCoordinates));
+			}
+
+			public void onStatusChanged(String provider, int status, Bundle extras) {
+			}
+
+			public void onProviderEnabled(String provider) {
+			}
+
+			public void onProviderDisabled(String provider) {
+			}
+		};
+
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10 * 1000, 50, locationListener);
 	}
 
 	private void showRoute(PathOverlay overlay, GeoPoint start, GeoPoint end) {
-		System.out.println("de.c3t.NaviActivity: LOCATION: " + start.toString());
-		Location lstart = toLocation(start);
-		Location lend = toLocation(end);
+		showRoute(overlay, toLocation(start), toLocation(end));
+	}
+
+	private void showRoute(PathOverlay overlay, Location lstart, Location lend) {
 		String url = getRouteXMLURL(lstart.getLatitude() + "," + lstart.getLongitude(), lend.getLatitude() + "," + lend.getLongitude());
 		System.out.println("de.c3t.NaviActivity: using URL " + url);
 		try {

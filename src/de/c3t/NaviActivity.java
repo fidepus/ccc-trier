@@ -33,12 +33,12 @@ public class NaviActivity extends MapActivity {
 	private MapView mapView;
 
 	private MyLocationOverlay myLocationOverlay;
-	
-	private LocationListener locationListener;
-	
+
+	private LocationListener locationListenerGPS;
+
+	private LocationListener locationListenerNetwork;
+
 	private LocationManager locationManager;
-	
-	private String locationProvider;
 
 	@Override
 	protected boolean isRouteDisplayed() {
@@ -76,18 +76,33 @@ public class NaviActivity extends MapActivity {
 		mapOverlays.add(pathOverlay);
 
 		locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-		Criteria criteria = new Criteria();
-		criteria.setAccuracy(Criteria.ACCURACY_FINE);
-		locationProvider = locationManager.getBestProvider(criteria, false);
-		System.out.println("de.c3t.NaviAcitivity locationProvider: "+locationProvider);
-		if (locationManager.getLastKnownLocation(locationProvider) != null)
+		if (locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER) != null)
 			new Thread(new Runnable() {
 				public void run() {
-					showRoute(pathOverlay, locationManager.getLastKnownLocation(locationProvider), clubCoordinates);
+					showRoute(pathOverlay, locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER), clubCoordinates);
 				}
 			}).start();
 
-		locationListener = new LocationListener() {
+		locationListenerGPS = new LocationListener() {
+			public void onLocationChanged(Location location) {
+				if (locationListenerNetwork != null) {
+					locationManager.removeUpdates(locationListenerNetwork);
+					locationListenerNetwork = null;
+				}
+				showRoute(pathOverlay, location, clubCoordinates);
+			}
+
+			public void onStatusChanged(String provider, int status, Bundle extras) {
+			}
+
+			public void onProviderEnabled(String provider) {
+			}
+
+			public void onProviderDisabled(String provider) {
+			}
+		};
+
+		locationListenerNetwork = new LocationListener() {
 			public void onLocationChanged(Location location) {
 				showRoute(pathOverlay, location, clubCoordinates);
 			}
@@ -102,7 +117,8 @@ public class NaviActivity extends MapActivity {
 			}
 		};
 
-		locationManager.requestLocationUpdates(locationProvider, 10 * 1000, 50, locationListener);
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10 * 1000, 50, locationListenerGPS);
+		locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10 * 1000, 200, locationListenerNetwork);
 	}
 
 	private void showRoute(PathOverlay overlay, Location start, GeoPoint end) {
@@ -170,7 +186,9 @@ public class NaviActivity extends MapActivity {
 		// when our activity resumes, we want to register for location updates
 		myLocationOverlay.enableMyLocation();
 		myLocationOverlay.enableCompass();
-		locationManager.requestLocationUpdates(locationProvider, 10 * 1000, 50, locationListener);
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10 * 1000, 50, locationListenerGPS);
+		if (locationListenerNetwork != null)
+			locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10 * 1000, 200, locationListenerNetwork);
 	}
 
 	@Override
@@ -179,7 +197,9 @@ public class NaviActivity extends MapActivity {
 		// when our activity pauses, we want to remove listening for location updates
 		myLocationOverlay.disableMyLocation();
 		myLocationOverlay.disableCompass();
-		locationManager.removeUpdates(locationListener);
+		locationManager.removeUpdates(locationListenerGPS);
+		if (locationListenerNetwork != null)
+			locationManager.removeUpdates(locationListenerNetwork);
 	}
 
 	private void zoomToMyLocation() {

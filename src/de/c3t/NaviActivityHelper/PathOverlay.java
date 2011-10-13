@@ -42,4 +42,8 @@ public class PathOverlay extends com.google.android.maps.Overlay {
   public void addPoint(GeoPoint p){
   	points.add(p);
   }
+  
+  public void clear(){
+  	points.clear();
+  }
 }

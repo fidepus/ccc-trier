@@ -126,6 +126,7 @@ public class NaviActivity extends MapActivity {
 	}
 
 	private void showRoute(PathOverlay overlay, Location lstart, Location lend) {
+		overlay.clear();
 		String url = getRouteXMLURL(lstart.getLatitude() + "," + lstart.getLongitude(), lend.getLatitude() + "," + lend.getLongitude());
 		System.out.println("de.c3t.NaviActivity: using URL " + url);
 		try {

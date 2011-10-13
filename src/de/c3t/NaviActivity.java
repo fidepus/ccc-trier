@@ -12,6 +12,7 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -69,11 +70,13 @@ public class NaviActivity extends MapActivity {
 		mapOverlays.add(pathOverlay);
 
 		final LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-
-		if (locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER) != null)
+		Criteria criteria = new Criteria();
+		criteria.setAccuracy(Criteria.ACCURACY_FINE);
+		final String locationProvider = locationManager.getBestProvider(criteria, false);
+		if (locationManager.getLastKnownLocation(locationProvider) != null)
 			new Thread(new Runnable() {
 				public void run() {
-					showRoute(pathOverlay, locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER), clubCoordinates);
+					showRoute(pathOverlay, locationManager.getLastKnownLocation(locationProvider), clubCoordinates);
 				}
 			}).start();
 
@@ -92,7 +95,7 @@ public class NaviActivity extends MapActivity {
 			}
 		};
 
-		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10 * 1000, 50, locationListener);
+		locationManager.requestLocationUpdates(locationProvider, 10 * 1000, 50, locationListener);
 	}
 
 	private void showRoute(PathOverlay overlay, Location start, GeoPoint end) {

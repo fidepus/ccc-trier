@@ -62,25 +62,24 @@ public class NaviActivity extends MapActivity {
 		mapView.postInvalidate();
 
 		OverlayItem overlayitem = new OverlayItem(clubCoordinates, "CCC Trier", "Paulinstr. 123");
-
 		itemizedoverlay.addOverlay(overlayitem);
+		mapOverlays.add(itemizedoverlay);
+
 		final PathOverlay pathOverlay = new PathOverlay();
 		mapOverlays.add(pathOverlay);
-		new Thread(new Runnable() {
-			public void run() {
-				if (myLocationOverlay.getMyLocation() != null)
-					showRoute(pathOverlay, myLocationOverlay.getMyLocation(), clubCoordinates);
-				else {
-					System.out.println("de.c3t.NaviActivity: no location -> no route");
+
+		final LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+
+		if (locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER) != null)
+			new Thread(new Runnable() {
+				public void run() {
+					showRoute(pathOverlay, locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER), clubCoordinates);
 				}
-			}
-		}).start();
-		mapOverlays.add(itemizedoverlay);
-		LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+			}).start();
 
 		LocationListener locationListener = new LocationListener() {
 			public void onLocationChanged(Location location) {
-				showRoute(pathOverlay, location, toLocation(clubCoordinates));
+				showRoute(pathOverlay, location, clubCoordinates);
 			}
 
 			public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -96,8 +95,8 @@ public class NaviActivity extends MapActivity {
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10 * 1000, 50, locationListener);
 	}
 
-	private void showRoute(PathOverlay overlay, GeoPoint start, GeoPoint end) {
-		showRoute(overlay, toLocation(start), toLocation(end));
+	private void showRoute(PathOverlay overlay, Location start, GeoPoint end) {
+		showRoute(overlay, start, toLocation(end));
 	}
 
 	private void showRoute(PathOverlay overlay, Location lstart, Location lend) {

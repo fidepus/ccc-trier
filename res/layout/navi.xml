@@ -11,12 +11,10 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:clickable="true"
-                android:apiKey="00z-HkFucADJVrpSM0LMAklfYucQTum4LrXsyoQ"
+                android:apiKey="00z-HkFucADIkng6B0UHb3Gkzn2Q3rTvWFKEaLw" 
+ 
                 />
-                <!-- First key is for debugging, second is for production. Change before publishing.
+                   <!-- Below is the development key for Google Maps. -->             
+                   <!-- android:apiKey="00z-HkFucADJVrpSM0LMAklfYucQTum4LrXsyoQ" /> -->
 
-                android:apiKey="00z-HkFucADIkng6B0UHb3Gkzn2Q3rTvWFKEaLw" -->
-               
-                
-                />
 </RelativeLayout>

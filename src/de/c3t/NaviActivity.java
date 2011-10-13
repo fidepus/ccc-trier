@@ -12,12 +12,10 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
@@ -30,7 +28,7 @@ import com.google.android.maps.OverlayItem;
 import de.c3t.NaviActivityHelper.PathOverlay;
 
 public class NaviActivity extends MapActivity {
-	private MapView mapView;
+	// private MapView mapView;
 
 	private MyLocationOverlay myLocationOverlay;
 
@@ -203,7 +201,7 @@ public class NaviActivity extends MapActivity {
 			locationManager.removeUpdates(locationListenerNetwork);
 	}
 
-	private void zoomToMyLocation() {
+	/* private void zoomToMyLocation() {
 		GeoPoint myLocationGeoPoint = myLocationOverlay.getMyLocation();
 		if (myLocationGeoPoint != null) {
 			mapView.getController().animateTo(myLocationGeoPoint);
@@ -211,7 +209,7 @@ public class NaviActivity extends MapActivity {
 		} else {
 			Toast.makeText(this, "Cannot determine location", Toast.LENGTH_SHORT).show();
 		}
-	}
+	} */
 
 	private String getRouteXMLURL(String start, String end) {
 		return "http://maps.googleapis.com/maps/api/directions/xml?origin=" + start + "&destination=" + end + "&sensor=true";

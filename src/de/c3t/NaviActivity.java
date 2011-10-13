@@ -33,6 +33,12 @@ public class NaviActivity extends MapActivity {
 	private MapView mapView;
 
 	private MyLocationOverlay myLocationOverlay;
+	
+	private LocationListener locationListener;
+	
+	private LocationManager locationManager;
+	
+	private String locationProvider;
 
 	@Override
 	protected boolean isRouteDisplayed() {
@@ -69,10 +75,11 @@ public class NaviActivity extends MapActivity {
 		final PathOverlay pathOverlay = new PathOverlay();
 		mapOverlays.add(pathOverlay);
 
-		final LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+		locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 		Criteria criteria = new Criteria();
 		criteria.setAccuracy(Criteria.ACCURACY_FINE);
-		final String locationProvider = locationManager.getBestProvider(criteria, false);
+		locationProvider = locationManager.getBestProvider(criteria, false);
+		System.out.println("de.c3t.NaviAcitivity locationProvider: "+locationProvider);
 		if (locationManager.getLastKnownLocation(locationProvider) != null)
 			new Thread(new Runnable() {
 				public void run() {
@@ -80,7 +87,7 @@ public class NaviActivity extends MapActivity {
 				}
 			}).start();
 
-		LocationListener locationListener = new LocationListener() {
+		locationListener = new LocationListener() {
 			public void onLocationChanged(Location location) {
 				showRoute(pathOverlay, location, clubCoordinates);
 			}
@@ -163,6 +170,7 @@ public class NaviActivity extends MapActivity {
 		// when our activity resumes, we want to register for location updates
 		myLocationOverlay.enableMyLocation();
 		myLocationOverlay.enableCompass();
+		locationManager.requestLocationUpdates(locationProvider, 10 * 1000, 50, locationListener);
 	}
 
 	@Override
@@ -171,6 +179,7 @@ public class NaviActivity extends MapActivity {
 		// when our activity pauses, we want to remove listening for location updates
 		myLocationOverlay.disableMyLocation();
 		myLocationOverlay.disableCompass();
+		locationManager.removeUpdates(locationListener);
 	}
 
 	private void zoomToMyLocation() {

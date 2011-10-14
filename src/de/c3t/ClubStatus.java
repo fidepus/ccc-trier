@@ -68,7 +68,7 @@ public class ClubStatus {
 		return clubOnline;
 	}
 
-	public InputStream getUrlData(String url) throws URISyntaxException, ClientProtocolException, IOException {
+	public static InputStream getUrlData(String url) throws URISyntaxException, ClientProtocolException, IOException {
 		DefaultHttpClient client = new DefaultHttpClient();
 		HttpGet method = new HttpGet(new URI(url));
 		HttpResponse res = client.execute(method);

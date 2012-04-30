@@ -14,44 +14,32 @@ public class StatusWidgetProvider extends AppWidgetProvider {
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
 		ClubStatus cs = new ClubStatus(context);
 		boolean clubStatus = cs.getStatus();
-    final int N = appWidgetIds.length;
+		final int N = appWidgetIds.length;
 
-    // Perform this loop procedure for each App Widget that belongs to this provider
-    for (int i=0; i<N; i++) {
-        int appWidgetId = appWidgetIds[i];
+		// Perform this loop procedure for each App Widget that belongs to this provider
+		for (int i = 0; i < N; i++) {
+			int appWidgetId = appWidgetIds[i];
 
-        // Create an Intent to launch ExampleActivity
-        Intent intent = new Intent(context, CCCTrier.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+			// Create an Intent to launch ExampleActivity
+			Intent intent = new Intent(context, CCCTrier.class);
+			PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
 
-        // Get the layout for the App Widget and attach an on-click listener
-        // to the button 
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.status_widget);
-        views.setOnClickPendingIntent(R.id.StatusWidgetFrameLayout, pendingIntent);
-        //set clubstatus
-        if(clubStatus){
-        views.setInt(R.id.StatusLogo, "setBackgroundResource", R.drawable.status_on_widget);
-        views.setInt(R.id.StatusLogo, "setImageResource", R.drawable.status_porta_on_widget);
-        } else {
-          views.setInt(R.id.StatusLogo, "setBackgroundResource", R.drawable.status_off_widget);
-          views.setInt(R.id.StatusLogo, "setImageResource", R.drawable.status_porta_off_widget); 	
-        }
-         
-        // Tell the AppWidgetManager to perform an update on the current app widget
-        appWidgetManager.updateAppWidget(appWidgetId, views);
-    }
+			// Get the layout for the App Widget and attach an on-click listener
+			// to the button
+			RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.status_widget);
+			views.setOnClickPendingIntent(R.id.StatusWidgetFrameLayout, pendingIntent);
+			// set clubstatus
+			if (clubStatus) {
+				views.setInt(R.id.StatusLogo, "setBackgroundResource", R.drawable.status_on_widget);
+				views.setInt(R.id.StatusLogo, "setImageResource", R.drawable.status_porta_on_widget);
+			} else {
+				views.setInt(R.id.StatusLogo, "setBackgroundResource", R.drawable.status_off_widget);
+				views.setInt(R.id.StatusLogo, "setImageResource", R.drawable.status_porta_off_widget);
+			}
+
+			// Tell the AppWidgetManager to perform an update on the current app widget
+			appWidgetManager.updateAppWidget(appWidgetId, views);
+		}
 		super.onUpdate(context, appWidgetManager, appWidgetIds);
 	}
-/*
-	void setStatusOn() {
-		findViewById(R.id.StatusLayout).setBackgroundResource(R.drawable.status_on);
-		ImageView image = (ImageView) findViewById(R.id.StatusLogo);
-		image.setImageResource(R.drawable.status_porta_on);
-	}
-
-	void setStatusOff() {
-		findViewById(R.id.StatusLayout).setBackgroundResource(R.drawable.status_off);
-		ImageView image = (ImageView) findViewById(R.id.StatusLogo);
-		image.setImageResource(R.drawable.status_porta_off);
-	}*/
 }

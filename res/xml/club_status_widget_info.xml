@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:minWidth="1dp"
+    android:minHeight="1dp"
+    android:updatePeriodMillis="3600000"
+    android:initialLayout="@layout/status_widget"
+    >
+    <!-- android:resizeMode="horizontal|vertical" --> <!-- Y do we need apilevel 12+ to set this fucking propetery? don't we use XML to avoid that shit? I want my fucking widget to be resizable but i want to have my app on android-devices people use, too-->
+    <!--  android:previewImage="@drawable/preview" -->
+    <!-- android:configure="com.example.android.ExampleAppWidgetConfigure" --> 
+</appwidget-provider>

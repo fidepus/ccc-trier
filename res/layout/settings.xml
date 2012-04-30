@@ -5,7 +5,7 @@
                 <CheckBoxPreference
                         android:title="Push-Notification"
                         android:defaultValue="false"
-                        android:summary="Use C2DM to recive notifications about the clubstatus. (Only Android 2.2 (Froyo) and up.)"
+                        android:summary="Use C2DM to recive notifications about the clubstatus."
                         android:key="C2DM" />
         </PreferenceCategory>
 </PreferenceScreen>

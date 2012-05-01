@@ -31,10 +31,10 @@ public class StatusWidgetProvider extends AppWidgetProvider {
 			// set clubstatus
 			if (clubStatus) {
 				views.setInt(R.id.StatusLogo, "setBackgroundResource", R.drawable.status_on_widget);
-				views.setInt(R.id.StatusLogo, "setImageResource", R.drawable.status_porta_on_widget);
+				views.setInt(R.id.StatusLogo, "setImageResource", R.drawable.status_porta_on);
 			} else {
 				views.setInt(R.id.StatusLogo, "setBackgroundResource", R.drawable.status_off_widget);
-				views.setInt(R.id.StatusLogo, "setImageResource", R.drawable.status_porta_off_widget);
+				views.setInt(R.id.StatusLogo, "setImageResource", R.drawable.status_porta_off);
 			}
 
 			// Tell the AppWidgetManager to perform an update on the current app widget

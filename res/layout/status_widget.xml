@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
                 android:background="@drawable/status_off_widget"
-                android:src="@drawable/status_porta_off_widget" />
+                android:src="@drawable/status_porta_off" />
             <!--  -->
 
         </RelativeLayout>

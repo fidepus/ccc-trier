@@ -11,8 +11,7 @@ public class StatusWidgetProvider extends AppWidgetProvider {
 
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-		ClubStatus cs = new ClubStatus(context);
-		boolean clubStatus = cs.getStatus();
+		boolean clubStatus = ClubStatus.getStatus(context);
 		final int N = appWidgetIds.length;
 
 		// Perform this loop procedure for each App Widget that belongs to this provider

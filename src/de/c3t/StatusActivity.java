@@ -8,13 +8,11 @@ public class StatusActivity extends Activity {
 
 	boolean isOn = false;
 
-	ClubStatus clubStatus;
-
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.status);
 		findViewById(R.id.StatusLayout).getBackground().setDither(true);
-		clubStatus = new ClubStatus(this);
+		fetchStatus();
 	}
 
 	public void onResume() {
@@ -40,7 +38,7 @@ public class StatusActivity extends Activity {
 	}
 
 	void fetchStatus() {
-		if (clubStatus.getStatus())
+		if (ClubStatus.getStatus(this))
 			setStatusOn();
 		else
 			setStatusOff();

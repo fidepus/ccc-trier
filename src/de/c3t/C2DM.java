@@ -53,8 +53,7 @@ public class C2DM extends BroadcastReceiver {
 	private void handleMessage(Context context, Intent intent) {
 		SharedPreferences settings = context.getSharedPreferences("c3tStatus", 0);
 		boolean clubOnline = settings.getBoolean("status", true);
-		ClubStatus cs = new ClubStatus(context);
-		boolean newStatus = cs.getStatus();
+		boolean newStatus = ClubStatus.getStatus(context);
 		if (!clubOnline && newStatus)
 			sendNotification(context);
 		System.out.println("C2DM: recived C2DM-Message, old status: " + clubOnline + ", new status: " + newStatus);

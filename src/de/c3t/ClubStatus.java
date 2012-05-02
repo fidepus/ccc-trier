@@ -19,16 +19,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 public class ClubStatus {
-	private Context cw;
-
-	private boolean clubOnline = false;
-
-	public ClubStatus(Context cw) {
-		this.cw = cw; // This is a reference to the activity or service that created this Object, this
-		// is necessary to find out if we are connected to the internet
-	}
-
-	boolean networkIsOnline() {
+	static boolean networkIsOnline(Context cw) {
 		ConnectivityManager cm = (ConnectivityManager) cw.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo netInfo = cm.getActiveNetworkInfo();
 		if (netInfo != null && netInfo.isConnectedOrConnecting()) {
@@ -37,8 +28,9 @@ public class ClubStatus {
 		return false;
 	}
 
-	boolean getStatus() {
-		if (networkIsOnline()) {
+	static boolean getStatus(Context cw) {
+		boolean clubOnline = false;
+		if (networkIsOnline(cw)) {
 			try {
 			XmlPullParserFactory factory =  XmlPullParserFactory.newInstance();
 			factory.setNamespaceAware(true);

@@ -9,7 +9,9 @@ import java.net.URLConnection;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.appwidget.AppWidgetManager;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -55,12 +57,19 @@ public class C2DM extends BroadcastReceiver {
 		boolean newStatus = cs.getStatus();
 		if (!clubOnline && newStatus)
 			sendNotification(context);
-		System.out.println("C2DM: recived C2DM-Message, old status: "+clubOnline+", new status: "+newStatus);
-		if (clubOnline != newStatus){
+		System.out.println("C2DM: recived C2DM-Message, old status: " + clubOnline + ", new status: " + newStatus);
+		if (clubOnline != newStatus) {
 			SharedPreferences.Editor editor = settings.edit();
 			editor.putBoolean("status", newStatus);
 			editor.commit();
-		}	
+			
+			AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+			int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, StatusWidgetProvider.class));
+			for (int i = 0; i < appWidgetIds.length; i++) {
+				int appWidgetId = appWidgetIds[i];
+				StatusWidgetProvider.updateWidget(context, appWidgetManager, appWidgetId, newStatus);
+			}
+		}
 	}
 
 	public static void sendGetRequest(String file) {

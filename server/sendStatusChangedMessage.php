@@ -11,10 +11,10 @@ if(is_numeric($_GET['nonce']) && sha1($sharedSecret.$_GET['nonce']) == $_GET['to
 		fclose($datei);
 		include("HTTP/Request.php");
 		function deleteRegistration($db, $id) {
-			sqlite_query($db, 'DELETE from phones WHERE registration_id == \''.sqlite_escape_string($id).'\'');
+			$db->exec('DELETE from phones WHERE registration_id == \''.$db->escapeString($id).'\'');
 		}
-		if($db = sqlite_open($tmpFolder.'db.sqlite')) {
-			$result = sqlite_query($db, 'SELECT * from phones');
+		if($db = new SQLite3($tmpFolder.'db.sqlite')) {
+			$result = $db->query('SELECT * from phones');
 			echo "Sending…\n";
 			#$request = new HttpRequest('https://android.apis.google.com/c2dm/send', HttpRequest::METH_POST);
 			$request = new Http_Request('https://android.apis.google.com/c2dm/send');
@@ -32,7 +32,7 @@ if(is_numeric($_GET['nonce']) && sha1($sharedSecret.$_GET['nonce']) == $_GET['to
 			#));
 			$request->addPostData('collapse_key', 'c3tOnlineStatusChanged');
 
-			while ($row = sqlite_fetch_array($result)) {
+			while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
 				//print_r($row);
 				#$request->addPostFields (array(
 				#	'registration_id' => $row['registration_id'],

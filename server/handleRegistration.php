@@ -1,8 +1,8 @@
 <?php
 if($_GET['registration_id'] != '') {
-	$registration_id = sqlite_escape_string($_GET['registration_id']);
-	if($db = sqlite_open("db.sqlite")) {
-		$result = sqlite_query($db, 
+	if($db = new SQLite3("db.sqlite")) {
+		$registration_id = $db->escapeString($_GET['registration_id']);
+		$result = $db->exec(
 			'INSERT OR REPLACE 
 			INTO phones VALUES ('.time().', \''.$registration_id.'\');');
 		echo "Sucess";
